@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <function name="set_default_values_to_fields" model="res.company"/>
+        <function model="res.partner" name="set_default_values_to_fields"/>
+    </data>
+</odoo>

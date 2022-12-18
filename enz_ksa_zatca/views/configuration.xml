@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="zatca_configuration_tree" model="ir.ui.view">
+        <field name="name">zatca.configuration.form</field>
+        <field name="model">zatca.config</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="zatca_configuration_view" model="ir.ui.view">
+        <field name="name">zatca.configuration.form</field>
+        <field name="model">zatca.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+
+
+                    <button name="generate_zatca_certificate"
+                            string="Generate Certificate &amp; Sandbox Credentials" type="object"
+                            class="btn-primary"/>
+                    <button name="register_certificate" string="Register Certificate" type="object"
+                            class="btn-primary"/>
+                    <button name="production_credentials" string="Get Production Credentials" type="object"
+                            class="btn-primary" attrs="{'invisible':[('onboarding_status','!=', True)]}"/>
+                    <button name="production_credentials_renew" string="Renew Production Credentials"
+                            type="object" class="btn-primary"
+                            attrs="{'invisible':[('onboarding_status','!=', True)]}"/>
+                </header>
+                <sheet>
+                    <group string="Company Informations">
+                        <group>
+                            <field name="company_id" required="1"/>
+                            <field name="common_name" required="1"/>
+                            <field name="serial_number" required="1"/>
+                            <field name="organization_identifier" required="1"/>
+                            <field name="organization_unit_name" required="1"/>
+                            <field name="organization_name" required="1"/>
+                            <field name="country_name" required="1"/>
+                            <field name="invoice_type" required="1"/>
+
+                        </group>
+                        <group>
+                            <field name="location_address" required="1"/>
+                            <field name="industry_business_category" required="1"/>
+                            <field name="otp"/>
+                            <field name="certificate"/>
+                            <field name="certificate_template_name" required="1"/>
+                            <field name="email_id" required="1"/>
+                            <field name="link" required="1"/>
+                            <field name="status" readonly="1"/>
+                            <field name="certificate_status" readonly="1"/>
+                            <field name="is_sandbox"/>
+                            <field name="private_key"
+                                   attrs="{'required':[('is_sandbox','=', True)], 'invisible':[('is_sandbox','!=', True)]}"/>
+
+                        </group>
+                    </group>
+                    <group string="Generated From ZATCA Portal">
+                        <group>
+                            <field name="reqid" readonly="1"/>
+                            <field name="sb_bs_token" readonly="1"/>
+                            <field name="sb_reqid" readonly="1"/>
+                            <field name="sb_secret" readonly="1"/>
+                            <field name="onboarding_status" readonly="1"/>
+                            <field name="on_board_status_details" readonly="1"/>
+                            <field name="pih" readonly="1"/>
+                            <field name="cert_sig_algo"/>
+                        </group>
+                        <group>
+                            <field name="bs_token" readonly="1"/>
+                            <field name="secret" readonly="1"/>
+                            <field name="xml_sequence" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="zatca_configuration_action" model="ir.actions.act_window">
+        <field name="name">ZATCA Configuration</field>
+        <field name="res_model">zatca.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                NO Company Registered!
+            </p>
+        </field>
+    </record>
+    <menuitem id="zatcaphase2config" parent="account.menu_finance_configuration" action="zatca_configuration_action"
+              sequence="0" name="ZATCA"/>
+
+</odoo>
